@@ -43,8 +43,7 @@ class MenuWidgetState extends State<MenuWidget>
   MenuElement newChild(MenuElement e) => e;
 
   @override
-  bool childHasMenuElement(MenuElement element, MenuElement menuElement) =>
-      element == menuElement;
+  bool childHasMenuElement(MenuElement element, MenuElement menuElement) => element == menuElement;
 
   @override
   void initState() {
@@ -92,8 +91,7 @@ class MenuWidgetState extends State<MenuWidget>
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        if (widget.menuInfo.menu.title?.isNotEmpty == true ||
-            !widget.menuInfo.isRoot)
+        if (widget.menuInfo.menu.title?.isNotEmpty == true || !widget.menuInfo.isRoot)
           _MenuButton(
             onTapUp: _onHeaderTap,
             enabled: !widget.menuInfo.isRoot,
@@ -118,8 +116,8 @@ class MenuWidgetState extends State<MenuWidget>
                 itemBuilder: (context, index) {
                   final element = resolvedChildren[index];
                   final key = _keys.putIfAbsent(element, () => GlobalKey());
-                  final bool enabled = element is Menu ||
-                      (element is MenuAction) && !element.attributes.disabled;
+                  final bool enabled =
+                      element is Menu || (element is MenuAction) && !element.attributes.disabled;
                   return Builder(
                     key: key,
                     builder: (context) {
@@ -183,8 +181,7 @@ class _ZeroIntrinsicSizeRenderBox extends RenderProxyBox {
   double computeMaxIntrinsicHeight(double width) => 0.0;
 }
 
-typedef _MenuButtonBuilder = Widget Function(
-    BuildContext context, bool pressed);
+typedef _MenuButtonBuilder = Widget Function(BuildContext context, bool pressed);
 
 class _MenuButton extends StatefulWidget {
   const _MenuButton({

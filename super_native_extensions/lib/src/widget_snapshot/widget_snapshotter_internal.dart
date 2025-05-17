@@ -72,8 +72,7 @@ class WidgetSnapshotterStateImpl extends WidgetSnapshotterState {
     Object key,
   ) {
     final completer = Completer<TargetedWidgetSnapshot?>();
-    _pendingSnapshots.add(
-        _PendingSnapshot(key: key, location: location, completer: completer));
+    _pendingSnapshots.add(_PendingSnapshot(key: key, location: location, completer: completer));
     _checkSnapshots();
     return completer.future;
   }
@@ -153,8 +152,7 @@ class WidgetSnapshotterStateImpl extends WidgetSnapshotterState {
     }
     final object = registeredWidget.widget == null
         ? _childSnapshotKey.currentContext?.findRenderObject()
-        : registeredWidget.repaintBoundaryKey.currentContext
-            ?.findRenderObject();
+        : registeredWidget.repaintBoundaryKey.currentContext?.findRenderObject();
     return object is RenderBetterRepaintBoundary ? object : null;
   }
 
@@ -251,8 +249,7 @@ Future<TargetedWidgetSnapshot> _getSnapshot(
     image.devicePixelRatio = devicePixelRatio;
   }
   final transform = renderObject.getTransformTo(null);
-  final r =
-      Rect.fromLTWH(0, 0, renderObject.size.width, renderObject.size.height);
+  final r = Rect.fromLTWH(0, 0, renderObject.size.width, renderObject.size.height);
 
   var offset = Offset.zero;
   if (translation != null) {
@@ -310,8 +307,7 @@ class _SnapshotLayoutRenderObjectWidget extends SingleChildRenderObjectWidget {
   }
 
   @override
-  void updateRenderObject(
-      BuildContext context, covariant _SnapshotLayoutRenderBox renderObject) {
+  void updateRenderObject(BuildContext context, covariant _SnapshotLayoutRenderBox renderObject) {
     renderObject.debugSnapshotKey = debugSnapshotKey;
   }
 }
@@ -324,8 +320,7 @@ class SnapshotSettingsState extends State<SnapshotSettings> {
   @override
   void initState() {
     super.initState();
-    final settings =
-        context.findAncestorRenderObjectOfType<_SnapshotLayoutRenderBox>();
+    final settings = context.findAncestorRenderObjectOfType<_SnapshotLayoutRenderBox>();
     if (settings != null) {
       final parentData = settings.parentData;
       if (parentData is _ParentData) {
@@ -362,10 +357,8 @@ class _ParentData extends ContainerBoxParentData<RenderBox> {
 
 class _RenderSnapshotLayout extends RenderBox
     with
-        ContainerRenderObjectMixin<RenderBox,
-            ContainerBoxParentData<RenderBox>>,
-        RenderBoxContainerDefaultsMixin<RenderBox,
-            ContainerBoxParentData<RenderBox>> {
+        ContainerRenderObjectMixin<RenderBox, ContainerBoxParentData<RenderBox>>,
+        RenderBoxContainerDefaultsMixin<RenderBox, ContainerBoxParentData<RenderBox>> {
   @override
   void setupParentData(RenderBox child) {
     if (child.parentData is! _ParentData) {
@@ -418,8 +411,7 @@ class _RenderSnapshotLayout extends RenderBox
         } else {
           final parentData = child.parentData as _ParentData;
           final constraints =
-              parentData.constraintsTransform?.call(this.constraints) ??
-                  this.constraints;
+              parentData.constraintsTransform?.call(this.constraints) ?? this.constraints;
           child.layout(constraints, parentUsesSize: false);
         }
       }

@@ -4,16 +4,13 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
-
 import 'package:super_context_menu/src/menu_internal.dart';
 import 'package:super_context_menu/super_context_menu.dart';
 import 'package:super_native_extensions/raw_menu.dart' as raw;
-
 // ignore: implementation_imports
 import 'package:super_native_extensions/src/mutex.dart';
 
 import 'scaffold/desktop/menu_session.dart';
-import 'scaffold/desktop/menu_widget_builder.dart';
 import 'util.dart';
 
 class _ContextMenuDetector extends StatefulWidget {
@@ -27,8 +24,7 @@ class _ContextMenuDetector extends StatefulWidget {
   final Widget child;
   final HitTestBehavior hitTestBehavior;
   final ContextMenuIsAllowed contextMenuIsAllowed;
-  final Future<void> Function(Offset, Listenable, Function(bool))
-      onShowContextMenu;
+  final Future<void> Function(Offset, Listenable, Function(bool)) onShowContextMenu;
 
   @override
   State<StatefulWidget> createState() => _ContextMenuDetectorState();
@@ -159,8 +155,7 @@ class DesktopContextMenuWidget extends StatelessWidget {
   /// on platform.
   final IconThemeData? iconTheme;
 
-  final WritingToolsConfiguration? Function()?
-      writingToolsConfigurationProvider;
+  final WritingToolsConfiguration? Function()? writingToolsConfigurationProvider;
 
   @override
   Widget build(BuildContext context) {
@@ -237,10 +232,8 @@ class DesktopContextMenuWidget extends StatelessWidget {
         }
         onMenuResolved(true);
         onShowMenu.notify();
-        final writingToolsConfiguration =
-            writingToolsConfigurationProvider?.call();
-        raw.writingToolsSuggestionCallback =
-            writingToolsConfiguration?.onSuggestion;
+        final writingToolsConfiguration = writingToolsConfigurationProvider?.call();
+        raw.writingToolsSuggestionCallback = writingToolsConfiguration?.onSuggestion;
 
         final request = raw.DesktopContextMenuRequest(
             iconTheme: serializationOptions.iconTheme,

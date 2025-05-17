@@ -50,6 +50,7 @@ class MenuWidget extends StatefulWidget {
     required this.cache,
     required this.tapRegionGroupIds,
     required this.parentFocusNode,
+    required this.hide,
   });
 
   final DesktopMenuWidgetBuilder menuWidgetBuilder;
@@ -61,6 +62,7 @@ class MenuWidget extends StatefulWidget {
   final DeferredMenuElementCache cache;
   final Set<Object> tapRegionGroupIds;
   final FocusNode? parentFocusNode;
+  final VoidCallback hide;
 
   @override
   State<StatefulWidget> createState() => MenuWidgetState();
@@ -311,6 +313,7 @@ class MenuWidgetState extends State<MenuWidget>
                           menuWidgetBuilder: widget.menuWidgetBuilder,
                           isSelected: _isSelected(item),
                           entry: item,
+                          hide: widget.hide,
                         ),
                       )
                 ],
@@ -427,6 +430,7 @@ class _MenuItemWidget extends StatefulWidget {
   final DesktopMenuInfo menuInfo;
   final DesktopMenuWidgetBuilder menuWidgetBuilder;
   final bool isSelected;
+  final VoidCallback hide;
 
   final Key innerKey;
 
@@ -438,6 +442,7 @@ class _MenuItemWidget extends StatefulWidget {
     required this.menuInfo,
     required this.menuWidgetBuilder,
     required this.isSelected,
+    required this.hide,
   });
 
   @override
@@ -496,6 +501,7 @@ class _MenuItemWidgetState extends State<_MenuItemWidget> {
               selected: widget.isSelected,
             ),
             widget.entry.element,
+           widget. hide,
           ),
         ),
       ),
