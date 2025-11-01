@@ -46,17 +46,9 @@ flutter:
   # adding or updating assets for this project.
   plugin:
     platforms:
-      android:
-        package: com.superlist.super_native_extensions
-        pluginClass: SuperNativeExtensionsPlugin
-      ios:
-        pluginClass: SuperNativeExtensionsPlugin
-      linux:
-        pluginClass: SuperNativeExtensionsPlugin
       macos:
         pluginClass: SuperNativeExtensionsPlugin
       windows:
         pluginClass: SuperNativeExtensionsPluginCApi
-      web:
-        pluginClass: SuperNativeExtensionsWeb
-        fileName: super_native_extensions_web.dart
+      # Mobile platforms (Android/iOS) and others are intentionally disabled to
+      # avoid building/checking on phones and emulators.

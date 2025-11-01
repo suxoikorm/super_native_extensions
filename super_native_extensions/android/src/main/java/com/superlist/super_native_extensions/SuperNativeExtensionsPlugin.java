@@ -16,11 +16,25 @@ public class SuperNativeExtensionsPlugin implements FlutterPlugin {
     static final DragDropHelper DragDropHelper = new DragDropHelper();
 
     private static boolean nativeInitialized = false;
+    private static boolean libraryLoaded = false;
+
+    private static boolean isEmulatorAbi() {
+        try {
+            String[] abis = android.os.Build.SUPPORTED_ABIS;
+            for (String abi : abis) {
+                if ("x86_64".equalsIgnoreCase(abi) || "x86".equalsIgnoreCase(abi)) {
+                    return true;
+                }
+            }
+        } catch (Throwable ignored) {
+        }
+        return false;
+    }
 
     @Override
     public void onAttachedToEngine(@NonNull FlutterPluginBinding flutterPluginBinding) {
         try {
-            if (!nativeInitialized) {
+            if (!nativeInitialized && libraryLoaded) {
                 init(flutterPluginBinding.getApplicationContext(), ClipDataHelper, DragDropHelper);
                 nativeInitialized = true;
             }
@@ -38,6 +52,18 @@ public class SuperNativeExtensionsPlugin implements FlutterPlugin {
                                    DragDropHelper DragDropHelper);
 
     static {
-        System.loadLibrary("super_native_extensions");
+        // Only attempt to load native library on emulator ABIs (x86/x86_64).
+        // On phones (arm/arm64) this plugin is a no-op to avoid packaging and loading native .so.
+        if (isEmulatorAbi()) {
+            try {
+                System.loadLibrary("super_native_extensions");
+                libraryLoaded = true;
+            } catch (Throwable t) {
+                Log.e("flutter", "Failed to load libsuper_native_extensions.so: " + t);
+                libraryLoaded = false;
+            }
+        } else {
+            libraryLoaded = false;
+        }
     }
 }
